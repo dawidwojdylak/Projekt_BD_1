@@ -3,6 +3,7 @@
 #include <iostream> 
 #include <string>
 #include <pqxx/pqxx>
+#include <memory>
 
 class Database
 {
@@ -16,7 +17,7 @@ private:
     std::string m_dbName, m_user, m_password, m_hostAddres, m_port;
 
     bool m_isDBConnected;
-    pqxx::connection m_connection;
+    std::unique_ptr<pqxx::connection> m_connection;
 
 };
 

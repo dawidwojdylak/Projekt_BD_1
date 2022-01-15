@@ -6,18 +6,18 @@ Database::Database(std::string dbName, std::string user, std::string pass, std::
     , m_password(pass)
     , m_hostAddres(hostaddr)
     , m_port(port)
-    , m_isDBConnected(false)
+    , m_DBisConnected(false)
 {}
 
 Database::~Database()
 {
-    if (m_isDBConnected)
+    if (m_DBisConnected)
         m_connection -> disconnect();
 }
 
 void Database::connect()
 {
-    if (!m_isDBConnected)
+    if (!m_DBisConnected)
     {
         try
         {
@@ -28,7 +28,7 @@ void Database::connect()
             // m_connection = new pqxx::connection(request);
             m_connection = std::make_unique<pqxx::connection>(request);
 
-            m_isDBConnected = true;
+            m_DBisConnected = true;
 
             if (m_connection -> is_open()) {
             std::cout << "Opened database successfully: " << m_connection -> dbname() << std::endl;
@@ -45,4 +45,34 @@ void Database::connect()
         
 
     }
+}
+
+void Database::sendQuery(std::string request)
+{
+    if (m_DBisConnected)
+    {
+        try
+        {
+            pqxx::work w {*m_connection};
+            pqxx::result res { w.exec(request) };
+            
+            for (const auto & row : res)
+            {
+                for (const auto & i : row)
+                    std::cout << i;
+            }
+            std::cout << '\n';
+        }
+        catch (pqxx::sql_error const & e)
+        {
+            std::cerr << "SQL error: " << e.what() << std::endl;
+            std::cerr << "SQL query: " << e.query() << std::endl;
+        }
+        catch(const std::exception& e)
+        {
+            std::cerr << e.what() << '\n';
+        }
+    }
+    else 
+        std::cout << "Data base connection is down\n";
 }

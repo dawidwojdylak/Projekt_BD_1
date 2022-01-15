@@ -12,11 +12,12 @@ public:
     ~Database();
 
     void connect();
+    void sendQuery(std::string request);
 
 private:
     std::string m_dbName, m_user, m_password, m_hostAddres, m_port;
 
-    bool m_isDBConnected;
+    bool m_DBisConnected;
     std::unique_ptr<pqxx::connection> m_connection;
 
 };

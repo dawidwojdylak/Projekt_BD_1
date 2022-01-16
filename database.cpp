@@ -82,7 +82,7 @@ pqxx::result Database::sendQuery(QString request)
         {
             std::cerr << "SQL error: " << e.what() << std::endl;
             std::cerr << "SQL query: " << e.query() << std::endl;
-            qDebug() << "SQL error";
+            emit emit_log(QString::fromStdString(std::string("SQL error: ") + std::string(e.what()) + std::string("SQL query: ") + std::string(e.query()) + '\n'));
         }
         catch(const std::exception& e)
         {

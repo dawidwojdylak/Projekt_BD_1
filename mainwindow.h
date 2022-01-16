@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QScrollBar>
 #include "database.h"
 
 QT_BEGIN_NAMESPACE

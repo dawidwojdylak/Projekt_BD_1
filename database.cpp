@@ -1,22 +1,29 @@
 #include "database.h"
 
-Database::Database(std::string dbName, std::string user, std::string pass, std::string hostaddr, std::string port)
-:   m_dbName(dbName)
+Database::Database(QString dbName, QString user, QString pass, QString hostaddr, QString port)
+:
+//  m_parent(nullptr)
+     m_dbName(dbName)
     , m_user(user)
     , m_password(pass)
     , m_hostAddres(hostaddr)
     , m_port(port)
     , m_DBisConnected(false)
-{}
-
-Database::~Database()
 {
-    if (m_DBisConnected)
-        m_connection -> disconnect();
+//    MainWindow::log("Starting DB app...\n");
+
 }
+
+Database::~Database() {}
+//{
+//    if (m_DBisConnected)
+//        m_connection -> disconnect();
+////    m_parent = nullptr;
+//}
 
 void Database::connect()
 {
+    QString return_value = "";
     if (!m_DBisConnected)
     {
         try
@@ -32,10 +39,16 @@ void Database::connect()
             m_DBisConnected = true;
 
             if (m_connection -> is_open()) {
-            std::cout << "Opened database successfully: " << m_connection -> dbname() << std::endl;
+                std::cout << "Opened database successfully: " << m_connection -> dbname() << std::endl;
+                return_value += "Opened database successfully: ";
+                return_value += m_connection -> dbname();
+                return_value += "\n";
+                emit emit_log(return_value);
+
             } else {
                 std::cout << "Can't open database" << std::endl;
-                return ;
+//                m_parent->log("Can't open database");
+//                return "Can't open database\n";
             }
 
         }
@@ -43,19 +56,19 @@ void Database::connect()
         {
             std::cerr << e.what() << '\n';
         }
-
-
     }
+//    return return_value;
 }
 
-void Database::sendQuery(std::string request)
+void Database::sendQuery(QString request)
 {
+    QString return_value;
     if (m_DBisConnected)
     {
         try
         {
             pqxx::work w {*m_connection};
-            pqxx::result res { w.exec(request) };
+            pqxx::result res { w.exec(request.toStdString()) };
 
             for (const auto & row : res)
             {
@@ -76,4 +89,6 @@ void Database::sendQuery(std::string request)
     }
     else
         std::cout << "Data base connection is down\n";
+
+//    return return_value;
 }

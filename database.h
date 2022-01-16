@@ -5,19 +5,32 @@
 #include <string>
 #include <pqxx/pqxx>
 #include <memory>
+#include <QString>
+#include <QWidget>
+#include <QObject>
 
-class Database
+//#include "mainwindow.h"
+
+class MainWindow;
+
+class Database : public QObject
 {
+    Q_OBJECT
 public:
-    Database(std::string dbName = "", std::string user = "", std::string pass = "", std::string hostaddr = "", std::string port = "");
-    ~Database();
+    Database(QString dbName = "", QString user = "", QString pass = "", QString hostaddr = "", QString port = "");
+    virtual ~Database();
+//    ~Database();
 
     void connect();
-    void sendQuery(std::string request);
+    void sendQuery(QString request);
 
-//private:
-    std::string m_dbName, m_user, m_password, m_hostAddres, m_port;
 
+signals:
+    void emit_log(const QString text) const;
+
+private:
+//    MainWindow * m_parent;
+    QString m_dbName, m_user, m_password, m_hostAddres, m_port;
     bool m_DBisConnected;
     std::unique_ptr<pqxx::connection> m_connection;
 

@@ -2,7 +2,6 @@
 
 Database::Database(QString dbName, QString user, QString pass, QString hostaddr, QString port)
 :
-//  m_parent(nullptr)
      m_dbName(dbName)
     , m_user(user)
     , m_password(pass)
@@ -10,7 +9,7 @@ Database::Database(QString dbName, QString user, QString pass, QString hostaddr,
     , m_port(port)
     , m_DBisConnected(false)
 {
-//    MainWindow::log("Starting DB app...\n");
+    emit emit_log("Starting DB app...");
 
 }
 
@@ -47,22 +46,23 @@ void Database::connect()
 
             } else {
                 std::cout << "Can't open database" << std::endl;
-//                m_parent->log("Can't open database");
-//                return "Can't open database\n";
+                emit emit_log("Can't open database.\n");
             }
 
         }
         catch(const std::exception& e)
         {
             std::cerr << e.what() << '\n';
+            emit emit_log(e.what());
         }
     }
 //    return return_value;
 }
 
-void Database::sendQuery(QString request)
+pqxx::result Database::sendQuery(QString request)
 {
-    QString return_value;
+//    qDebug() << request;
+    pqxx::result temp;
     if (m_DBisConnected)
     {
         try
@@ -72,23 +72,29 @@ void Database::sendQuery(QString request)
 
             for (const auto & row : res)
             {
-                for (const auto & i : row)
-                    std::cout << i;
+//                for (const auto & i : row)
+//                    qDebug() << i.c_str();
+//                    std::cout << i;
             }
-            std::cout << '\n';
+            return res;
         }
         catch (pqxx::sql_error const & e)
         {
             std::cerr << "SQL error: " << e.what() << std::endl;
             std::cerr << "SQL query: " << e.query() << std::endl;
+            qDebug() << "SQL error";
         }
         catch(const std::exception& e)
         {
             std::cerr << e.what() << '\n';
+            qDebug() << "exception in sndQuery";
         }
     }
     else
+    {
         std::cout << "Data base connection is down\n";
+        emit emit_log("Data base connection is down\n");
+    }
 
-//    return return_value;
+    return temp;
 }

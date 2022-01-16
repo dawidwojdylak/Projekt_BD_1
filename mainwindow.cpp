@@ -45,6 +45,38 @@ void MainWindow::on_pushButton_connect_clicked()
 void MainWindow::on_pushButton_submit_clicked()
 {
     QString query = ui->queryInput->toPlainText();
-    m_db->sendQuery(query);
+    qDebug() << query;
+    pqxx::result res = m_db->sendQuery(query);
+
+    int cols = 0, rows = 0;
+    for (const auto & row : res)
+    {
+        rows++;
+        for (const auto & i : row)
+        {
+            cols++;
+//            qDebug() << res.column_table(cols - 1);
+        }
+    }
+
+    qDebug() << rows << ' ' << cols;
+
+    ui->tableWidget->setColumnCount(res.columns());
+    ui->tableWidget->setRowCount(rows);
+
+
+    cols = rows = 0;
+    for (const auto & row : res)
+    {
+        cols = 0;
+        for (const auto & i : row)
+        {
+//            ui->tableWidget->item(rows, cols)->setData(Qt::DisplayRole, QVariant(QString("test")));
+            QTableWidgetItem *newItem = new QTableWidgetItem(QString(i.c_str()));
+            ui->tableWidget->setItem(rows, cols, newItem);
+            cols++;
+        }
+        rows++;
+    }
 }
 

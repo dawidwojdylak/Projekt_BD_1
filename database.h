@@ -9,6 +9,8 @@
 #include <QWidget>
 #include <QObject>
 
+#include <QDebug>
+
 //#include "mainwindow.h"
 
 class MainWindow;
@@ -22,7 +24,7 @@ public:
 //    ~Database();
 
     void connect();
-    void sendQuery(QString request);
+    pqxx::result sendQuery(QString request);
 
 
 signals:

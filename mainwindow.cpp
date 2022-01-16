@@ -8,8 +8,10 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
 
     m_db = new Database();
+    m_login = new login();
 
     connect(m_db, &Database::emit_log, this, &MainWindow::catch_log);
+    connect(m_login, &login::emit_login_data, this, &MainWindow::onLoginOKClicked);
 }
 
 MainWindow::~MainWindow()
@@ -21,6 +23,15 @@ void MainWindow::catch_log(const QString text)
 {
     ui->appOstream->insertPlainText(text);
     ui->appOstream->verticalScrollBar()->setValue(ui->appOstream->verticalScrollBar()->maximum());
+}
+
+void MainWindow::onLoginOKClicked()
+{
+    m_db->setDBName(QString::fromStdString(m_login->getDBName()));
+    m_db->setUserName(QString::fromStdString(m_login->getUserName()));
+    m_db->setPasswd(QString::fromStdString(m_login->getPasswd()));
+    m_db->setHostAddress(QString::fromStdString(m_login->getHostAddress()));
+    m_db->setPort(QString::fromStdString(m_login->getPort()));
 }
 
 
@@ -69,5 +80,11 @@ void MainWindow::on_pushButton_submit_clicked()
         }
         rows++;
     }
+}
+
+
+void MainWindow::on_pushButton_login_clicked()
+{
+    m_login->show();
 }
 

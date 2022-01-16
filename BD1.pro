@@ -10,14 +10,17 @@ CONFIG += c++17
 
 SOURCES += \
     database.cpp \
+    login.cpp \
     main.cpp \
     mainwindow.cpp
 
 HEADERS += \
     database.h \
+    login.h \
     mainwindow.h
 
 FORMS += \
+    login.ui \
     mainwindow.ui
 
 #QMAKE_CFLAGS += -lpqxx -lpq

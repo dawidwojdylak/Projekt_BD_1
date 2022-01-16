@@ -98,3 +98,10 @@ pqxx::result Database::sendQuery(QString request)
 
     return temp;
 }
+
+
+void Database::setDBName      (QString arg) { m_dbName = arg; }
+void Database::setUserName    (QString arg) { m_user = arg; }
+void Database::setPasswd      (QString arg) { m_password = arg; }
+void Database::setHostAddress (QString arg) { m_hostAddres = arg; }
+void Database::setPort        (QString arg) { m_port = arg; }

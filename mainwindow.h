@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include <QScrollBar>
 #include "database.h"
+#include "login.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -17,20 +18,22 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
-//    void log(const QString text);
-
 public slots:
     void catch_log(const QString text);
+    void onLoginOKClicked();
 private slots:
     void on_pushButton_connect_clicked();
     void on_pushButton_submit_clicked();
 
 
 
+    void on_pushButton_login_clicked();
+
 private:
     Ui::MainWindow *ui;
 //    std::unique_ptr<Database> m_db;
     Database * m_db;
+    login * m_login;
 
 };
 #endif // MAINWINDOW_H

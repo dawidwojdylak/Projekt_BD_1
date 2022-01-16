@@ -25,6 +25,11 @@ public:
 
     void connect();
     pqxx::result sendQuery(QString request);
+    void setDBName      (QString arg);
+    void setUserName    (QString arg);
+    void setPasswd      (QString arg);
+    void setHostAddress (QString arg);
+    void setPort        (QString arg);
 
 
 signals:

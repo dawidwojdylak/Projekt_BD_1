@@ -1,6 +1,7 @@
-#pragma once
+#ifndef DATABASE_H
+#define DATABASE_H
 
-#include <iostream> 
+#include <iostream>
 #include <string>
 #include <pqxx/pqxx>
 #include <memory>
@@ -14,7 +15,7 @@ public:
     void connect();
     void sendQuery(std::string request);
 
-private:
+//private:
     std::string m_dbName, m_user, m_password, m_hostAddres, m_port;
 
     bool m_DBisConnected;
@@ -23,3 +24,4 @@ private:
 };
 
 
+#endif // DATABASE_H

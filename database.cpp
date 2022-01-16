@@ -1,7 +1,7 @@
-#include "../include/database.h"
+#include "database.h"
 
 Database::Database(std::string dbName, std::string user, std::string pass, std::string hostaddr, std::string port)
-:   m_dbName(dbName)     
+:   m_dbName(dbName)
     , m_user(user)
     , m_password(pass)
     , m_hostAddres(hostaddr)
@@ -23,10 +23,11 @@ void Database::connect()
         {
             std::string request = "dbname = test user = admin password = admin \
             hostaddr = 127.0.0.1 port = 5432";
-            // request += 
+            // request +=
             // pqxx::connection temp_conn(request);
             // m_connection = new pqxx::connection(request);
             m_connection = std::make_unique<pqxx::connection>(request);
+
 
             m_DBisConnected = true;
 
@@ -42,7 +43,7 @@ void Database::connect()
         {
             std::cerr << e.what() << '\n';
         }
-        
+
 
     }
 }
@@ -55,7 +56,7 @@ void Database::sendQuery(std::string request)
         {
             pqxx::work w {*m_connection};
             pqxx::result res { w.exec(request) };
-            
+
             for (const auto & row : res)
             {
                 for (const auto & i : row)
@@ -73,6 +74,6 @@ void Database::sendQuery(std::string request)
             std::cerr << e.what() << '\n';
         }
     }
-    else 
+    else
         std::cout << "Data base connection is down\n";
 }

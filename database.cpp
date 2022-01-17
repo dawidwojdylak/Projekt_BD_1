@@ -13,12 +13,11 @@ Database::Database(QString dbName, QString user, QString pass, QString hostaddr,
 
 }
 
-Database::~Database() {}
-//{
-//    if (m_DBisConnected)
-//        m_connection -> disconnect();
-////    m_parent = nullptr;
-//}
+Database::~Database() //{}
+{
+    if (m_DBisConnected)
+        m_connection -> disconnect();
+}
 
 void Database::connect()
 {
@@ -27,12 +26,12 @@ void Database::connect()
     {
         try
         {
-            std::string request = "dbname = test user = admin password = admin \
-            hostaddr = 127.0.0.1 port = 5432";
-            // request +=
-            // pqxx::connection temp_conn(request);
-            // m_connection = new pqxx::connection(request);
-            m_connection = std::make_unique<pqxx::connection>(request);
+//            std::string request = "dbname = test user = admin password = admin \
+//            hostaddr = 127.0.0.1 port = 5432";
+
+            QString request = "dbname = " + m_dbName + " user = " + m_user + " password = " + m_password + " hostaddr = " + m_hostAddres + " port = " + m_port;
+
+            m_connection = std::make_unique<pqxx::connection>(request.toStdString());
 
 
             m_DBisConnected = true;

@@ -35,7 +35,7 @@
            </widget>
           </item>
           <item>
-           <widget class="QPushButton" name="pushButton_connect">
+           <widget class="QPushButton" name="pushButton_logout">
             <property name="maximumSize">
              <size>
               <width>200</width>
@@ -43,7 +43,7 @@
              </size>
             </property>
             <property name="text">
-             <string>Połącz BD</string>
+             <string>Wyloguj się</string>
             </property>
            </widget>
           </item>

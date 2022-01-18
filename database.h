@@ -33,7 +33,7 @@ public:
 
 
 signals:
-    void emit_log(const QString text) const;
+    void emit_log(const QString text, bool red = false) const;
 
 private:
 //    MainWindow * m_parent;

@@ -22,10 +22,13 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-void MainWindow::catch_log(const QString text)
+void MainWindow::catch_log(const QString text, bool red)
 {
+    if (red)
+        ui->appOstream->setTextColor(Qt::red);
     ui->appOstream->insertPlainText(QString::number(++m_logCounter) + ": " + text);
     ui->appOstream->verticalScrollBar()->setValue(ui->appOstream->verticalScrollBar()->maximum());
+    ui->appOstream->setTextColor(Qt::black);
 }
 
 void MainWindow::onLoginOKClicked()
@@ -55,15 +58,21 @@ void MainWindow::on_pushButton_submit_clicked()
             cols++;
     }
 
-//    qDebug() << rows << ' ' << cols;
+
 
     ui->tableWidget->setColumnCount(res.columns());
     ui->tableWidget->setRowCount(rows);
 
     if (rows == 0 or cols == 0)
     {
-        catch_log("Empty table\n");
+        catch_log("Empty table\n", true);
     }
+
+    QStringList labels;
+    for (unsigned i = 0; i < res.columns(); i++)
+        labels << res.column_name(i);
+
+    ui->tableWidget->setHorizontalHeaderLabels(labels);
 
     rows = 0;
     for (const auto & row : res)

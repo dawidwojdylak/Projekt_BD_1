@@ -19,7 +19,7 @@ public:
     ~MainWindow();
 
 public slots:
-    void catch_log(const QString text);
+    void catch_log(const QString text, bool red = false);
     void onLoginOKClicked();
 private slots:
     void on_pushButton_submit_clicked();

@@ -26,9 +26,6 @@ void Database::connect()
     {
         try
         {
-//            std::string request = "dbname = test user = admin password = admin \
-//            hostaddr = 127.0.0.1 port = 5432";
-
             QString request = "dbname = " + m_dbName + " user = " + m_user + " password = " + m_password + " hostaddr = " + m_hostAddres + " port = " + m_port;
 
             m_connection = std::make_unique<pqxx::connection>(request.toStdString());
@@ -45,22 +42,20 @@ void Database::connect()
 
             } else {
                 std::cout << "Can't open database" << std::endl;
-                emit emit_log("Can't open database.\n");
+                emit emit_log("Can't open database.\n", true);
             }
 
         }
         catch(const std::exception& e)
         {
             std::cerr << e.what() << '\n';
-            emit emit_log(e.what());
+            emit emit_log(e.what(), true);
         }
     }
-//    return return_value;
 }
 
 pqxx::result Database::sendQuery(QString request)
 {
-//    qDebug() << request;
     pqxx::result temp;
     if (m_DBisConnected)
     {
@@ -69,30 +64,24 @@ pqxx::result Database::sendQuery(QString request)
             pqxx::work w {*m_connection};
             pqxx::result res { w.exec(request.toStdString()) };
 
-            for (const auto & row : res)
-            {
-//                for (const auto & i : row)
-//                    qDebug() << i.c_str();
-//                    std::cout << i;
-            }
             return res;
         }
         catch (pqxx::sql_error const & e)
         {
             std::cerr << "SQL error: " << e.what() << std::endl;
             std::cerr << "SQL query: " << e.query() << std::endl;
-            emit emit_log(QString::fromStdString(std::string("SQL error: ") + std::string(e.what()) + std::string("SQL query: ") + std::string(e.query()) + '\n'));
+            emit emit_log(QString::fromStdString(std::string("SQL error: ") + std::string(e.what()) + std::string("SQL query: ") + std::string(e.query()) + '\n'), true);
         }
         catch(const std::exception& e)
         {
             std::cerr << e.what() << '\n';
-            qDebug() << "exception in sndQuery";
+            emit emit_log(QString::fromStdString(e.what()), true);
         }
     }
     else
     {
         std::cout << "Data base connection is down\n";
-        emit emit_log("Data base connection is down\n");
+        emit emit_log("Data base connection is down\n", true);
     }
 
     return temp;

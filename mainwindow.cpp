@@ -179,27 +179,33 @@ void MainWindow::on_pushButton_input_clicked()
 
 void MainWindow::on_pushButton_save_clicked()
 {
+    QRegularExpression re("\\d+");
     QString values = "";
     QString valNames = "";
     const int cols = ui->tableWidget->columnCount();
-    for (int i = 0; i < ui->tableWidget->columnCount(); i++)
+    for (int i = 0; i < cols; i++)
     {
-        values += ui->tableWidget->model()->data(ui->tableWidget->model()->index(ui->tableWidget->rowCount()-1, i)).toString() + " ";
+        QString curVal = ui->tableWidget->model()->data(ui->tableWidget->model()->index(ui->tableWidget->rowCount()-1, i)).toString();
+        if(re.match(curVal).hasMatch())
+            values += curVal + " ";
+        else
+            values += "\'" + curVal + "\' ";
+
         valNames += ui->tableWidget->horizontalHeaderItem(i)->text() + " ";
     }
-//    qDebug () << values;
-//    qDebug() << valNames;
+
     QString query = "INSERT INTO " + m_db->getSelectedTab() + " (";
     for (int i = 0; i < cols - 1; i++)
         query += valNames.split(" ").at(i) + ", ";
     query += valNames.split(" ").at(cols - 1);
     query += ") VALUES (";
     for (int i = 0; i < cols - 1; i++)
-        query += "\'" + values.split(" ").at(i) + "\', ";
-    query += "\'" + values.split(" ").at(cols - 1) + "\'";
+        query += "" + values.split(" ").at(i) + ", ";
+    query += "" + values.split(" ").at(cols - 1) + "";
     query += ");";
 //    qDebug() << query;
     m_db->sendQuery(query, true);
     ui->pushButton_save->setDisabled(true);
+//    catch_log("Data has been appended successfully");
 }
 

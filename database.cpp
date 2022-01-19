@@ -64,7 +64,10 @@ pqxx::result Database::sendQuery(QString request, bool saveMode)
             pqxx::work w {*m_connection};
             pqxx::result res { w.exec(request.toStdString()) };
             if (saveMode)
+            {
                 w.commit();
+                emit emit_log("Data has been appended successfully\n");
+            }
 
             return res;
         }

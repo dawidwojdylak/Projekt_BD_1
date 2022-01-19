@@ -5,6 +5,7 @@
 #include <QScrollBar>
 #include "database.h"
 #include "login.h"
+#include <QRegularExpression>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }

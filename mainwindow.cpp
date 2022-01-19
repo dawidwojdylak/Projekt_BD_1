@@ -4,6 +4,7 @@
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
+    , m_isAppendingData(false)
 {
     ui->setupUi(this);
 
@@ -37,7 +38,7 @@ void MainWindow::showTable(QString query)
     if (rows == 0 or cols == 0)
     {
         catch_log("Empty table\n", true);
-        return;
+//        return;
     }
 
     ui->tableWidget->setColumnCount(res.columns());
@@ -171,9 +172,13 @@ void MainWindow::on_comboBox_table_currentIndexChanged(int index)
 
 void MainWindow::on_pushButton_input_clicked()
 {
-//    insertIntoTable();
-    ui -> tableWidget -> setRowCount(ui->tableWidget->rowCount() + 1);
-    ui -> pushButton_save -> setEnabled(true);
+    if (!m_isAppendingData)
+    {
+        ui -> tableWidget -> setRowCount(ui->tableWidget->rowCount() + 1);
+        ui -> pushButton_save -> setEnabled(true);
+        m_isAppendingData = true;
+    }
+
 }
 
 
@@ -203,9 +208,9 @@ void MainWindow::on_pushButton_save_clicked()
         query += "" + values.split(" ").at(i) + ", ";
     query += "" + values.split(" ").at(cols - 1) + "";
     query += ");";
-//    qDebug() << query;
+
     m_db->sendQuery(query, true);
     ui->pushButton_save->setDisabled(true);
-//    catch_log("Data has been appended successfully");
+    m_isAppendingData = false;
 }
 

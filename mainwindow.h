@@ -46,6 +46,7 @@ private:
     Database * m_db;
     login * m_login;
     unsigned m_logCounter;
+    bool m_isAppendingData;
 
 };
 #endif // MAINWINDOW_H

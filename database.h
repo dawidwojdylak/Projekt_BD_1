@@ -24,12 +24,16 @@ public:
 //    ~Database();
 
     void connect();
-    pqxx::result sendQuery(QString request);
+    pqxx::result sendQuery(QString request, bool saveMode = false);
     void setDBName      (QString arg);
     void setUserName    (QString arg);
     void setPasswd      (QString arg);
     void setHostAddress (QString arg);
     void setPort        (QString arg);
+    void setSelectedTab (QString arg);
+
+    QString getSelectedTab() const;
+    bool isConnected() const;
 
 
 signals:
@@ -40,6 +44,7 @@ private:
     QString m_dbName, m_user, m_password, m_hostAddres, m_port;
     bool m_DBisConnected;
     std::unique_ptr<pqxx::connection> m_connection;
+    QString m_selectedTable;
 
 };
 

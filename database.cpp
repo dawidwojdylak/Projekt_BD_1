@@ -8,9 +8,9 @@ Database::Database(QString dbName, QString user, QString pass, QString hostaddr,
     , m_hostAddres(hostaddr)
     , m_port(port)
     , m_DBisConnected(false)
+    , m_selectedTable("adres_czytelnika")
 {
     emit emit_log("Starting DB app...");
-
 }
 
 Database::~Database() //{}
@@ -54,7 +54,7 @@ void Database::connect()
     }
 }
 
-pqxx::result Database::sendQuery(QString request)
+pqxx::result Database::sendQuery(QString request, bool saveMode)
 {
     pqxx::result temp;
     if (m_DBisConnected)
@@ -63,6 +63,8 @@ pqxx::result Database::sendQuery(QString request)
         {
             pqxx::work w {*m_connection};
             pqxx::result res { w.exec(request.toStdString()) };
+            if (saveMode)
+                w.commit();
 
             return res;
         }
@@ -93,3 +95,7 @@ void Database::setUserName    (QString arg) { m_user = arg; }
 void Database::setPasswd      (QString arg) { m_password = arg; }
 void Database::setHostAddress (QString arg) { m_hostAddres = arg; }
 void Database::setPort        (QString arg) { m_port = arg; }
+void Database::setSelectedTab (QString arg) { m_selectedTable = arg; }
+
+QString Database::getSelectedTab() const    { return m_selectedTable; }
+bool Database::isConnected() const          { return m_DBisConnected; }

@@ -48,6 +48,116 @@
            </widget>
           </item>
           <item>
+           <widget class="Line" name="line">
+            <property name="maximumSize">
+             <size>
+              <width>200</width>
+              <height>16777215</height>
+             </size>
+            </property>
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QComboBox" name="comboBox_table">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>200</width>
+              <height>16777215</height>
+             </size>
+            </property>
+            <item>
+             <property name="text">
+              <string>Adres czytelnika</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Autor</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Czytelnik</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>e_czytnik</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Karta biblioteczna</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Książka</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Płyta CD</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Płyta film</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Płyta muzyka</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Sztuka</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Wydawnictwo</string>
+             </property>
+            </item>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="pushButton_input">
+            <property name="maximumSize">
+             <size>
+              <width>200</width>
+              <height>16777215</height>
+             </size>
+            </property>
+            <property name="text">
+             <string>Wprowadź dane</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="pushButton_save">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>200</width>
+              <height>16777215</height>
+             </size>
+            </property>
+            <property name="text">
+             <string>Zapisz dane</string>
+            </property>
+           </widget>
+          </item>
+          <item>
            <spacer name="verticalSpacer">
             <property name="orientation">
              <enum>Qt::Vertical</enum>

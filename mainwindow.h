@@ -18,6 +18,10 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
+//    void updateTableList();
+    void showTable(QString query);
+    void insertIntoTable();
+
 public slots:
     void catch_log(const QString text, bool red = false);
     void onLoginOKClicked();
@@ -27,6 +31,13 @@ private slots:
     void on_pushButton_login_clicked();
 
     void on_pushButton_logout_clicked();
+
+
+    void on_comboBox_table_currentIndexChanged(int index);
+
+    void on_pushButton_input_clicked();
+
+    void on_pushButton_save_clicked();
 
 private:
     Ui::MainWindow *ui;

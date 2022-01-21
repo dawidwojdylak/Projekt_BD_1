@@ -158,6 +158,27 @@
            </widget>
           </item>
           <item>
+           <widget class="Line" name="line_4">
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="Line" name="line_3">
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="Line" name="line_5">
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+           </widget>
+          </item>
+          <item>
            <spacer name="verticalSpacer">
             <property name="orientation">
              <enum>Qt::Vertical</enum>
@@ -169,6 +190,51 @@
              </size>
             </property>
            </spacer>
+          </item>
+          <item>
+           <widget class="QLabel" name="label">
+            <property name="text">
+             <string>Tryb tabeli:</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QComboBox" name="comboBox_tablestretch">
+            <property name="maximumSize">
+             <size>
+              <width>200</width>
+              <height>16777215</height>
+             </size>
+            </property>
+            <item>
+             <property name="text">
+              <string>Dopasowany do zawartości</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Wypełniający okno</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Interaktywny</string>
+             </property>
+            </item>
+           </widget>
+          </item>
+          <item>
+           <widget class="Line" name="line_2">
+            <property name="maximumSize">
+             <size>
+              <width>200</width>
+              <height>16777215</height>
+             </size>
+            </property>
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+           </widget>
           </item>
           <item>
            <widget class="QPushButton" name="pushButton_submit">

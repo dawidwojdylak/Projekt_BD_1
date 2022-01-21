@@ -40,6 +40,10 @@ private slots:
 
     void on_pushButton_save_clicked();
 
+
+
+    void on_comboBox_tablestretch_activated(int index);
+
 private:
     Ui::MainWindow *ui;
 //    std::unique_ptr<Database> m_db;

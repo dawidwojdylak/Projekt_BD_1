@@ -64,6 +64,8 @@ void MainWindow::showTable(QString query)
         }
         rows++;
     }
+
+
 }
 
 void MainWindow::insertIntoTable()
@@ -212,5 +214,28 @@ void MainWindow::on_pushButton_save_clicked()
     m_db->sendQuery(query, true);
     ui->pushButton_save->setDisabled(true);
     m_isAppendingData = false;
+}
+
+
+
+
+
+void MainWindow::on_comboBox_tablestretch_activated(int index)
+{
+    switch (index)
+    {
+    case 0:
+            ui->tableWidget->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
+        break;
+    case 1:
+            ui->tableWidget->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+        break;
+    case 2:
+            ui->tableWidget->horizontalHeader()->setSectionResizeMode(QHeaderView::Interactive);
+        break;
+    default:
+            ui->tableWidget->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
+        break;
+    }
 }
 

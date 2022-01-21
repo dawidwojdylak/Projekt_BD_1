@@ -24,7 +24,7 @@ CREATE TABLE "e_czytnik" (
 );
 
 CREATE TABLE "plyta_CD" (
-  "plyta_id" int PRIMARY KEY--(foreign)
+  "plyta_id" int --PRIMARY KEY--(foreign)
 );
 
 CREATE TABLE "autor" (
@@ -82,18 +82,18 @@ CREATE TABLE "sztuka" (
 
 );
 
-ALTER TABLE "sztuka" ADD CONSTRAINT sztuka_fk0 FOREIGN KEY ("id_sztuka") REFERENCES "ksiazka" ("ksiazka_id");
+--ALTER TABLE "sztuka" ADD CONSTRAINT sztuka_fk0 FOREIGN KEY ("id_sztuka") REFERENCES "ksiazka" ("ksiazka_id");
 ALTER TABLE "ksiazka" ADD CONSTRAINT ksiazka_fk0 FOREIGN KEY ("autor") REFERENCES "autor" ("autor_id");
 ALTER TABLE "ksiazka" ADD CONSTRAINT ksiazka_fk1 FOREIGN KEY ("wydawnictwo") REFERENCES "wydawnictwo" ("wydawnictwo_id");
-ALTER TABLE "sztuka" ADD CONSTRAINT sztuka_fk1 FOREIGN KEY ("id_sztuka") REFERENCES "e_czytnik" ("czytnik_id");
+--ALTER TABLE "sztuka" ADD CONSTRAINT sztuka_fk1 FOREIGN KEY ("id_sztuka") REFERENCES "e_czytnik" ("czytnik_id");
 ALTER TABLE "sztuka" ADD CONSTRAINT sztuka_fk2 FOREIGN KEY ("id_sztuka") REFERENCES "plyta_CD" ("plyta_id");
-ALTER TABLE "sztuka" ADD CONSTRAINT sztuka_fk3 FOREIGN KEY ("id_sztuka") REFERENCES "czytelnik" ("czytelnik_id");
--- ALTER TABLE "czytelnik" ADD CONSTRAINT czytelnik_fk0 FOREIGN KEY ("adres") REFERENCES "adres_czytelnika" ("adres_id");
+--ALTER TABLE "sztuka" ADD CONSTRAINT sztuka_fk3 FOREIGN KEY ("id_sztuka") REFERENCES "czytelnik" ("czytelnik_id");
+
 ALTER TABLE "czytelnik" ADD FOREIGN KEY ("czytelnik_id") REFERENCES "adres_czytelnika" ("adres_id");
 ALTER TABLE "karta_biblioteczna" ADD CONSTRAINT karta_biblioteczna_fk0 FOREIGN KEY ("karta_id") REFERENCES "czytelnik" ("czytelnik_id");
 ALTER TABLE "karta_biblioteczna" ADD CONSTRAINT karta_biblioteczna_fk1 FOREIGN KEY ("wypozyczone") REFERENCES "sztuka" ("id_sztuka"); --
-ALTER TABLE "plyta_CD" ADD CONSTRAINT plyta_CD_fk0 FOREIGN KEY ("plyta_id") REFERENCES "plyta_muzyka" ("muzyka_id");
-ALTER TABLE "plyta_CD" ADD CONSTRAINT plyta_CD_fk1 FOREIGN KEY ("plyta_id") REFERENCES "plyta_film" ("film_id");
+--ALTER TABLE "plyta_CD" ADD CONSTRAINT plyta_CD_fk0 FOREIGN KEY ("plyta_id") REFERENCES "plyta_muzyka" ("muzyka_id");
+--ALTER TABLE "plyta_CD" ADD CONSTRAINT plyta_CD_fk1 FOREIGN KEY ("plyta_id") REFERENCES "plyta_film" ("film_id");
 
 
 

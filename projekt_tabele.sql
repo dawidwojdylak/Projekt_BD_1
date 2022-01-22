@@ -87,7 +87,7 @@ ALTER TABLE "ksiazka" ADD CONSTRAINT ksiazka_fk0 FOREIGN KEY ("autor") REFERENCE
 ALTER TABLE "ksiazka" ADD CONSTRAINT ksiazka_fk1 FOREIGN KEY ("wydawnictwo") REFERENCES "wydawnictwo" ("wydawnictwo_id");
 --ALTER TABLE "sztuka" ADD CONSTRAINT sztuka_fk1 FOREIGN KEY ("id_sztuka") REFERENCES "e_czytnik" ("czytnik_id");
 ALTER TABLE "sztuka" ADD CONSTRAINT sztuka_fk2 FOREIGN KEY ("id_sztuka") REFERENCES "plyta_CD" ("plyta_id");
---ALTER TABLE "sztuka" ADD CONSTRAINT sztuka_fk3 FOREIGN KEY ("id_sztuka") REFERENCES "czytelnik" ("czytelnik_id");
+
 
 ALTER TABLE "czytelnik" ADD FOREIGN KEY ("czytelnik_id") REFERENCES "adres_czytelnika" ("adres_id");
 ALTER TABLE "karta_biblioteczna" ADD CONSTRAINT karta_biblioteczna_fk0 FOREIGN KEY ("karta_id") REFERENCES "czytelnik" ("czytelnik_id");
@@ -252,6 +252,14 @@ INSERT INTO sztuka (id_sztuka, wypozyczona, data_wyp, termin_odd, data_odd) VALU
 , (18, FALSE, NULL, NULL, NULL)
 , (19, FALSE, NULL, NULL, NULL)
 , (20, FALSE, NULL, NULL, NULL)
+, (100, FALSE, NULL, NULL, NULL)
+, (101, FALSE, NULL, NULL, NULL)
+, (102, FALSE, NULL, NULL, NULL)
+, (103, FALSE, NULL, NULL, NULL)
+, (104, FALSE, NULL, NULL, NULL)
+, (105, FALSE, NULL, NULL, NULL)
+, (106, FALSE, NULL, NULL, NULL)
+, (107, FALSE, NULL, NULL, NULL)
 , (1001, FALSE, NULL, NULL, NULL)
 , (1002, FALSE, NULL, NULL, NULL)
 , (1003, FALSE, NULL, NULL, NULL)
@@ -271,3 +279,44 @@ INSERT INTO sztuka (id_sztuka, wypozyczona, data_wyp, termin_odd, data_odd) VALU
 , (1017, FALSE, NULL, NULL, NULL)
 , (1018, FALSE, NULL, NULL, NULL)
 , (1019, FALSE, NULL, NULL, NULL);
+
+
+
+-- widoki
+
+-- DROP VIEW wypozyczone;
+
+-- CREATE VIEW wypozyczone
+-- AS
+-- SELECT sztuka.id_sztuka, ksiazka.tytul
+-- FROM sztuka INNER JOIN ksiazka ON sztuka.id_sztuka = ksiazka.ksiazka_id where sztuka.wypozyczona = true;
+
+-- DROP VIEW dostepne;
+
+-- CREATE VIEW dostepne 
+-- AS
+-- SELECT sztuka.id_sztuka, ksiazka.tytul
+-- FROM sztuka INNER JOIN ksiazka ON sztuka.id_sztuka = ksiazka.ksiazka_id where sztuka.wypozyczona = false;
+
+DROP VIEW wypozyczone;
+CREATE VIEW wypozyczone
+AS
+SELECT sztuka.id_sztuka, ksiazka.tytul as ksiazka_tytul, e_czytnik.model, plyta_muzyka.tytul as muzyka_tytul, plyta_film.tytul as film_tytul
+FROM sztuka FULL OUTER JOIN ksiazka ON sztuka.id_sztuka = ksiazka.ksiazka_id
+FULL OUTER JOIN e_czytnik ON e_czytnik.czytnik_id = sztuka.id_sztuka
+FULL OUTER JOIN plyta_muzyka ON plyta_muzyka.muzyka_id = sztuka.id_sztuka
+FULL OUTER JOIN plyta_film ON plyta_film.film_id = sztuka.id_sztuka where sztuka.wypozyczona = true;
+
+DROP VIEW dostepne;
+CREATE VIEW dostepne
+AS
+SELECT sztuka.id_sztuka, ksiazka.tytul as ksiazka_tytul, e_czytnik.model, plyta_muzyka.tytul as muzyka_tytul, plyta_film.tytul as film_tytul
+FROM sztuka FULL OUTER JOIN ksiazka ON sztuka.id_sztuka = ksiazka.ksiazka_id
+FULL OUTER JOIN e_czytnik ON e_czytnik.czytnik_id = sztuka.id_sztuka
+FULL OUTER JOIN plyta_muzyka ON plyta_muzyka.muzyka_id = sztuka.id_sztuka
+FULL OUTER JOIN plyta_film ON plyta_film.film_id = sztuka.id_sztuka where sztuka.wypozyczona = false;
+
+CREATE VIEW [Brazil Customers] AS
+SELECT CustomerName, ContactName
+FROM Customers
+WHERE Country = 'Brazil';

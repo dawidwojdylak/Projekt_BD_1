@@ -101,7 +101,12 @@ void MainWindow::onLoginOKClicked()
 
     m_db->connect();
     if (m_db->isConnected())
+    {
         ui->comboBox_table->setEnabled(true);
+        ui->pushButton_ava->setEnabled(true);
+        ui->pushButton_unav->setEnabled(true);
+    }
+
 //    updateTableList();
 }
 
@@ -244,5 +249,17 @@ void MainWindow::on_comboBox_tablestretch_activated(int index)
             ui->tableWidget->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
         break;
     }
+}
+
+
+void MainWindow::on_pushButton_ava_clicked()
+{
+    showTable("SELECT * FROM dostepne");
+}
+
+
+void MainWindow::on_pushButton_unav_clicked()
+{
+    showTable("SELECT * FROM wypozyczone");
 }
 

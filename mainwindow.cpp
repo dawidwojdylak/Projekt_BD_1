@@ -105,6 +105,7 @@ void MainWindow::onLoginOKClicked()
         ui->comboBox_table->setEnabled(true);
         ui->pushButton_ava->setEnabled(true);
         ui->pushButton_unav->setEnabled(true);
+        ui->pushButton_input->setEnabled(true);
     }
 
 //    updateTableList();
@@ -131,6 +132,15 @@ void MainWindow::on_pushButton_login_clicked()
 void MainWindow::on_pushButton_logout_clicked()
 {
     m_db->disconnect();
+    ui->comboBox_table->setEnabled(false);
+    ui->pushButton_ava->setEnabled(false);
+    ui->pushButton_unav->setEnabled(false);
+    ui->pushButton_input->setEnabled(false);
+    m_db->setDBName(QString::fromStdString  (""));
+    m_db->setUserName(QString::fromStdString(""));
+    m_db->setPasswd(QString::fromStdString  (""));
+    m_db->setHostAddress(QString::fromStdString(""));
+    m_db->setPort(QString::fromStdString    (""));
 }
 
 void MainWindow::on_comboBox_table_currentIndexChanged(int index)
@@ -139,42 +149,113 @@ void MainWindow::on_comboBox_table_currentIndexChanged(int index)
     {
         case 0:
             m_db -> setSelectedTab("adres_czytelnika");
+            ui->comboBox_sort->setDisabled(true);
+            ui->radioButton_down->setDisabled(true);
+            ui->radioButton_up->setDisabled(true);
         break;
         case 1:
             m_db -> setSelectedTab("autor");
+            ui->comboBox_sort->setEnabled(true);
+            ui->radioButton_down->setEnabled(true);
+            ui->radioButton_up->setEnabled(true);
         break;
         case 2:
             m_db -> setSelectedTab("czytelnik");
+            ui->comboBox_sort->setEnabled(true);
+            ui->radioButton_down->setEnabled(true);
+            ui->radioButton_up->setEnabled(true);
         break;
         case 3:
             m_db -> setSelectedTab("e_czytnik");
+            ui->comboBox_sort->setDisabled(true);
+            ui->radioButton_down->setDisabled(true);
+            ui->radioButton_up->setDisabled(true);
         break;
         case 4:
             m_db -> setSelectedTab("karta_biblioteczna");
+            ui->comboBox_sort->setDisabled(true);
+            ui->radioButton_down->setDisabled(true);
+            ui->radioButton_up->setDisabled(true);
         break;
         case 5:
             m_db -> setSelectedTab("ksiazka");
+            ui->comboBox_sort->setEnabled(true);
+            ui->radioButton_down->setEnabled(true);
+            ui->radioButton_up->setEnabled(true);
         break;
         case 6:
             m_db -> setSelectedTab("\"plyta_CD\"");
+            ui->comboBox_sort->setDisabled(true);
+            ui->radioButton_down->setDisabled(true);
+            ui->radioButton_up->setDisabled(true);
         break;
         case 7:
             m_db -> setSelectedTab("plyta_film");
+            ui->comboBox_sort->setEnabled(true);
+            ui->radioButton_down->setEnabled(true);
+            ui->radioButton_up->setEnabled(true);
         break;
         case 8:
             m_db -> setSelectedTab("plyta_muzyka");
+            ui->comboBox_sort->setEnabled(true);
+            ui->radioButton_down->setEnabled(true);
+            ui->radioButton_up->setEnabled(true);
         break;
         case 9:
             m_db -> setSelectedTab("sztuka");
+            ui->comboBox_sort->setDisabled(true);
+            ui->radioButton_down->setDisabled(true);
+            ui->radioButton_up->setDisabled(true);
         break;
         case 10:
             m_db -> setSelectedTab("wydawnictwo");
+            ui->comboBox_sort->setDisabled(true);
+            ui->radioButton_down->setDisabled(true);
+            ui->radioButton_up->setDisabled(true);
         break;
         default:
             m_db -> setSelectedTab("");
         break;
     }
-    showTable("SELECT * FROM " + m_db -> getSelectedTab() + ";");
+
+    QString gpby = "";
+    switch(ui->comboBox_sort->currentIndex())
+    {
+    case 0:
+        break;
+    case 1:
+        if (index == 1 or index == 2)
+        {
+            if (ui->radioButton_up->isChecked())
+                gpby += " ORDER BY imie";
+            else
+                gpby += " ORDER BY imie DESC";
+        }
+        break;
+    case 2:
+        if (index == 1 or index == 2)
+        {
+            if (ui->radioButton_up->isChecked())
+                gpby += " ORDER BY nazwisko";
+            else
+                gpby += " ORDER BY nazwisko DESC";
+        }
+        break;
+    case 3:
+        if (index == 5 or index == 7 or index == 8)
+        {
+            if (ui->radioButton_up->isChecked())
+                gpby += " ORDER BY tytul";
+            else
+                gpby += " ORDER BY tytul DESC";
+            break;
+        }
+
+    default:
+        break;
+    }
+
+    showTable("SELECT * FROM " + m_db -> getSelectedTab() + gpby + ";");
 }
 
 
@@ -252,14 +333,23 @@ void MainWindow::on_comboBox_tablestretch_activated(int index)
 }
 
 
-void MainWindow::on_pushButton_ava_clicked()
-{
-    showTable("SELECT * FROM dostepne");
-}
+void MainWindow::on_pushButton_ava_clicked() { showTable("SELECT * FROM dostepne"); }
 
 
-void MainWindow::on_pushButton_unav_clicked()
-{
-    showTable("SELECT * FROM wypozyczone");
-}
+void MainWindow::on_pushButton_unav_clicked() { showTable("SELECT * FROM wypozyczone"); }
+
+
+void MainWindow::on_pushButton_cAv_clicked() { showTable("SELECT COUNT(*) as Dostepne FROM sztuka where wypozyczona = false;"); }
+
+
+void MainWindow::on_pushButton_cUnav_clicked() { showTable("SELECT COUNT(*) as Wypozyczone FROM sztuka where wypozyczona = true;"); }
+
+
+void MainWindow::on_comboBox_sort_currentIndexChanged(int index) { on_comboBox_table_currentIndexChanged(ui->comboBox_table->currentIndex()); }
+
+
+void MainWindow::on_radioButton_up_clicked() { on_comboBox_table_currentIndexChanged(ui->comboBox_table->currentIndex()); }
+
+
+void MainWindow::on_radioButton_down_clicked() { on_comboBox_table_currentIndexChanged(ui->comboBox_table->currentIndex()); }
 

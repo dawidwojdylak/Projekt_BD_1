@@ -48,6 +48,16 @@ private slots:
 
     void on_pushButton_unav_clicked();
 
+    void on_pushButton_cAv_clicked();
+
+    void on_pushButton_cUnav_clicked();
+
+    void on_comboBox_sort_currentIndexChanged(int index);
+
+    void on_radioButton_up_clicked();
+
+    void on_radioButton_down_clicked();
+
 private:
     Ui::MainWindow *ui;
 //    std::unique_ptr<Database> m_db;

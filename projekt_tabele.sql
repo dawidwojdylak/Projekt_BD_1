@@ -316,7 +316,22 @@ FULL OUTER JOIN e_czytnik ON e_czytnik.czytnik_id = sztuka.id_sztuka
 FULL OUTER JOIN plyta_muzyka ON plyta_muzyka.muzyka_id = sztuka.id_sztuka
 FULL OUTER JOIN plyta_film ON plyta_film.film_id = sztuka.id_sztuka where sztuka.wypozyczona = false;
 
-CREATE VIEW [Brazil Customers] AS
-SELECT CustomerName, ContactName
-FROM Customers
-WHERE Country = 'Brazil';
+-- SELECT COUNT(*) FROM sztuka;
+
+
+
+
+
+-- CREATE OR REPLACE FUNCTION insert_adres() RETURNS TRIGGER AS $$
+-- BEGIN
+--   IF (EXISTS (select czytelnik_id from czytelnik where ))
+
+
+--   INSERT INTO person_data (id) VALUES (New.id) ;
+--   RETURN NEW;
+-- END;
+-- $$ LANGUAGE 'plpgsql';
+
+-- CREATE TRIGGER czytelnik_insert
+--     BEFORE INSERT ON czytelnik
+--     FOR EACH ROW EXECUTE PROCEDURE insert_adres();

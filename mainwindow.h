@@ -6,6 +6,7 @@
 #include "database.h"
 #include "login.h"
 #include <QRegularExpression>
+#include <QMessageBox>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -27,20 +28,20 @@ public slots:
     void catch_log(const QString text, bool red = false);
     void onLoginOKClicked();
 private slots:
+    void onAboutClicked() const;
+    void onExitClicked();
+
     void on_pushButton_submit_clicked();
 
     void on_pushButton_login_clicked();
 
     void on_pushButton_logout_clicked();
 
-
     void on_comboBox_table_currentIndexChanged(int index);
 
     void on_pushButton_input_clicked();
 
     void on_pushButton_save_clicked();
-
-
 
     void on_comboBox_tablestretch_activated(int index);
 

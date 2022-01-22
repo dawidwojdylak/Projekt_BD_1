@@ -13,10 +13,13 @@ MainWindow::MainWindow(QWidget *parent)
 
     connect(m_db, &Database::emit_log, this, &MainWindow::catch_log);
     connect(m_login, &login::emit_login_data, this, &MainWindow::onLoginOKClicked);
+    connect(ui->actionAbout, &QAction::triggered, this, &MainWindow::onAboutClicked);
+    connect(ui->actionExit, &QAction::triggered, this, &MainWindow::onExitClicked);
 
     ui->tableWidget->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
     ui->queryInput->insertPlainText("SELECT * FROM ksiazka;");
     m_logCounter = 0;
+    setWindowTitle("Bazy Danych - Projekt - Dawid Wojdylak");
 }
 
 MainWindow::~MainWindow()
@@ -106,9 +109,23 @@ void MainWindow::onLoginOKClicked()
         ui->pushButton_ava->setEnabled(true);
         ui->pushButton_unav->setEnabled(true);
         ui->pushButton_input->setEnabled(true);
+        on_comboBox_table_currentIndexChanged(0);
     }
 
-//    updateTableList();
+    //    updateTableList();
+}
+
+void MainWindow::onAboutClicked() const
+{
+    QMessageBox msg;
+    msg.setWindowTitle("Info");
+    msg.setText("Bazy danych\nProjekt - Biblioteka\nDawid Wojdylak, 2022");
+    msg.exec();
+}
+
+void MainWindow::onExitClicked()
+{
+    QCoreApplication::quit();
 }
 
 

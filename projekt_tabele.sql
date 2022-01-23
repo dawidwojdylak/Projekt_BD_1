@@ -316,6 +316,13 @@ FULL OUTER JOIN e_czytnik ON e_czytnik.czytnik_id = sztuka.id_sztuka
 FULL OUTER JOIN plyta_muzyka ON plyta_muzyka.muzyka_id = sztuka.id_sztuka
 FULL OUTER JOIN plyta_film ON plyta_film.film_id = sztuka.id_sztuka where sztuka.wypozyczona = false;
 
+DROP VIEW ksiazka_autor_wydawnictwo;
+create VIEW ksiazka_autor_wydawnictwo
+AS 
+SELECT ksiazka.ksiazka_id, ksiazka.tytul, autor.imie, autor.nazwisko, wydawnictwo.nazwa as wydawnictwo
+FROM ksiazka INNER JOIN wydawnictwo ON wydawnictwo.wydawnictwo_id = ksiazka.wydawnictwo
+INNER JOIN autor ON autor.autor_id = ksiazka.autor;-- WHERE autor.autor_id = ksiazka.ksiazka_id;
+
 -- SELECT COUNT(*) FROM sztuka;
 
 

@@ -59,6 +59,7 @@ private slots:
 
     void on_radioButton_down_clicked();
 
+
 private:
     Ui::MainWindow *ui;
 //    std::unique_ptr<Database> m_db;

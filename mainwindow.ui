@@ -126,6 +126,11 @@
               <string>Wydawnictwo</string>
              </property>
             </item>
+            <item>
+             <property name="text">
+              <string>Widok: Książka-autor-wydawnictwo</string>
+             </property>
+            </item>
            </widget>
           </item>
           <item>
@@ -375,12 +380,12 @@
             </item>
             <item>
              <property name="text">
-              <string>Wypełniający okno</string>
+              <string>Interaktywny</string>
              </property>
             </item>
             <item>
              <property name="text">
-              <string>Interaktywny</string>
+              <string>Wypełniający okno</string>
              </property>
             </item>
            </widget>

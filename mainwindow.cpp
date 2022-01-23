@@ -19,7 +19,7 @@ MainWindow::MainWindow(QWidget *parent)
     ui->tableWidget->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
     ui->queryInput->insertPlainText("SELECT * FROM ksiazka;");
     m_logCounter = 0;
-    setWindowTitle("Bazy Danych - Projekt - Dawid Wojdylak");
+    setWindowTitle("Bazy Danych - Projekt");
 }
 
 MainWindow::~MainWindow()
@@ -162,6 +162,7 @@ void MainWindow::on_pushButton_logout_clicked()
 
 void MainWindow::on_comboBox_table_currentIndexChanged(int index)
 {
+    ui->pushButton_input->setEnabled(true);
     switch (index)
     {
         case 0:
@@ -230,6 +231,13 @@ void MainWindow::on_comboBox_table_currentIndexChanged(int index)
             ui->radioButton_down->setDisabled(true);
             ui->radioButton_up->setDisabled(true);
         break;
+        case 11:
+            m_db -> setSelectedTab("ksiazka_autor_wydawnictwo");
+            ui->comboBox_sort->setEnabled(true);
+            ui->radioButton_down->setEnabled(true);
+            ui->radioButton_up->setEnabled(true);
+            ui->pushButton_input->setDisabled(true);
+        break;
         default:
             m_db -> setSelectedTab("");
         break;
@@ -241,7 +249,7 @@ void MainWindow::on_comboBox_table_currentIndexChanged(int index)
     case 0:
         break;
     case 1:
-        if (index == 1 or index == 2)
+        if (index == 1 or index == 2 or index == 11)
         {
             if (ui->radioButton_up->isChecked())
                 gpby += " ORDER BY imie";
@@ -250,7 +258,7 @@ void MainWindow::on_comboBox_table_currentIndexChanged(int index)
         }
         break;
     case 2:
-        if (index == 1 or index == 2)
+        if (index == 1 or index == 2 or index == 11)
         {
             if (ui->radioButton_up->isChecked())
                 gpby += " ORDER BY nazwisko";
@@ -259,7 +267,7 @@ void MainWindow::on_comboBox_table_currentIndexChanged(int index)
         }
         break;
     case 3:
-        if (index == 5 or index == 7 or index == 8)
+        if (index == 5 or index == 7 or index == 8 or index == 11)
         {
             if (ui->radioButton_up->isChecked())
                 gpby += " ORDER BY tytul";
@@ -271,7 +279,6 @@ void MainWindow::on_comboBox_table_currentIndexChanged(int index)
     default:
         break;
     }
-
     showTable("SELECT * FROM " + m_db -> getSelectedTab() + gpby + ";");
 }
 
@@ -338,10 +345,10 @@ void MainWindow::on_comboBox_tablestretch_activated(int index)
             ui->tableWidget->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
         break;
     case 1:
-            ui->tableWidget->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+            ui->tableWidget->horizontalHeader()->setSectionResizeMode(QHeaderView::Interactive);
         break;
     case 2:
-            ui->tableWidget->horizontalHeader()->setSectionResizeMode(QHeaderView::Interactive);
+            ui->tableWidget->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
         break;
     default:
             ui->tableWidget->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);

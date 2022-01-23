@@ -24,12 +24,11 @@ CREATE TABLE "e_czytnik" (
 );
 
 CREATE TABLE "plyta_CD" (
-  "plyta_id" int --PRIMARY KEY--(foreign)
+  "plyta_id" int 
 );
 
 CREATE TABLE "autor" (
   "autor_id" int PRIMARY KEY,
-  --"ksiazka_id" int,
   "imie" varchar(50),
   "nazwisko" varchar(50)
 );
@@ -43,7 +42,6 @@ CREATE TABLE "czytelnik" (
   "czytelnik_id" int PRIMARY KEY,
   "imie" varchar(20),
   "nazwisko" varchar(20),
-  --"adres" int,
   "nr_telefonu" varchar(10)
 );
 
@@ -74,7 +72,7 @@ CREATE TABLE "plyta_film" (
 );
 
 CREATE TABLE "sztuka" (
-  "id_sztuka" int PRIMARY KEY, --(foreign),
+  "id_sztuka" int PRIMARY KEY, 
   "wypozyczona" boolean,
   "data_wyp" date,
   "termin_odd" date,
@@ -82,25 +80,13 @@ CREATE TABLE "sztuka" (
 
 );
 
---ALTER TABLE "sztuka" ADD CONSTRAINT sztuka_fk0 FOREIGN KEY ("id_sztuka") REFERENCES "ksiazka" ("ksiazka_id");
+
 ALTER TABLE "ksiazka" ADD CONSTRAINT ksiazka_fk0 FOREIGN KEY ("autor") REFERENCES "autor" ("autor_id");
 ALTER TABLE "ksiazka" ADD CONSTRAINT ksiazka_fk1 FOREIGN KEY ("wydawnictwo") REFERENCES "wydawnictwo" ("wydawnictwo_id");
---ALTER TABLE "sztuka" ADD CONSTRAINT sztuka_fk1 FOREIGN KEY ("id_sztuka") REFERENCES "e_czytnik" ("czytnik_id");
 ALTER TABLE "sztuka" ADD CONSTRAINT sztuka_fk2 FOREIGN KEY ("id_sztuka") REFERENCES "plyta_CD" ("plyta_id");
-
-
 ALTER TABLE "czytelnik" ADD FOREIGN KEY ("czytelnik_id") REFERENCES "adres_czytelnika" ("adres_id");
 ALTER TABLE "karta_biblioteczna" ADD CONSTRAINT karta_biblioteczna_fk0 FOREIGN KEY ("karta_id") REFERENCES "czytelnik" ("czytelnik_id");
 ALTER TABLE "karta_biblioteczna" ADD CONSTRAINT karta_biblioteczna_fk1 FOREIGN KEY ("wypozyczone") REFERENCES "sztuka" ("id_sztuka"); --
---ALTER TABLE "plyta_CD" ADD CONSTRAINT plyta_CD_fk0 FOREIGN KEY ("plyta_id") REFERENCES "plyta_muzyka" ("muzyka_id");
---ALTER TABLE "plyta_CD" ADD CONSTRAINT plyta_CD_fk1 FOREIGN KEY ("plyta_id") REFERENCES "plyta_film" ("film_id");
-
-
-
-
--- create user admin with password 'admin';
-
----
 
 INSERT INTO autor (autor_id, imie, nazwisko) VALUES
 (1, 'Tadeusz', 'Różewicz')
@@ -153,7 +139,7 @@ INSERT INTO ksiazka (ksiazka_id, tytul, autor, wydawnictwo) VALUES
 ,(19, 'Buszujący w zbożu', 14, 10)
 ,(20, 'Pieśń o Achillesie', 15, 8);
 
----
+
 INSERT INTO adres_czytelnika (adres_id, miasto, ulica, numer_domu, kod_pocztowy) VALUES
 (1, 'Brzeg', 'Reymonta Władysława', '109', '49-305')
 ,(2, 'Poznań', 'Wołczyńska', '52', '60-003')
@@ -164,8 +150,6 @@ INSERT INTO adres_czytelnika (adres_id, miasto, ulica, numer_domu, kod_pocztowy)
 ,(7, 'Łódź', 'Bukowa', '98', '91-481')
 ,(8, 'Wrocław', 'Struga Andrzeja', '61', '50-228')
 ,(9, 'Kraków', 'Lubelska',' 118', '30-003');
-
-
 
 
 INSERT INTO czytelnik (czytelnik_id, imie, nazwisko, nr_telefonu) VALUES
@@ -190,7 +174,6 @@ INSERT INTO karta_biblioteczna (karta_id, wypozyczone, naleznosc) VALUES
 , (8, NULL, '0')
 , (9, NULL, '0');
 
---- works till here
 
 INSERT INTO e_czytnik (czytnik_id, producent, model) VALUES
 (100, 'Amazon', 'Kindle 10')
@@ -230,7 +213,6 @@ INSERT INTO plyta_muzyka (muzyka_id, wykonawca, tytul) values
 , (1018, 'Abba', 'Gold Greatest Hits')
 , (1019, 'Happysad', 'Podróże z i pod prąd');
 
---doesnt work
 INSERT INTO sztuka (id_sztuka, wypozyczona, data_wyp, termin_odd, data_odd) VALUES 
 (1, FALSE, NULL, NULL, NULL)
 , (2, FALSE, NULL, NULL, NULL)
@@ -281,23 +263,6 @@ INSERT INTO sztuka (id_sztuka, wypozyczona, data_wyp, termin_odd, data_odd) VALU
 , (1019, FALSE, NULL, NULL, NULL);
 
 
-
--- widoki
-
--- DROP VIEW wypozyczone;
-
--- CREATE VIEW wypozyczone
--- AS
--- SELECT sztuka.id_sztuka, ksiazka.tytul
--- FROM sztuka INNER JOIN ksiazka ON sztuka.id_sztuka = ksiazka.ksiazka_id where sztuka.wypozyczona = true;
-
--- DROP VIEW dostepne;
-
--- CREATE VIEW dostepne 
--- AS
--- SELECT sztuka.id_sztuka, ksiazka.tytul
--- FROM sztuka INNER JOIN ksiazka ON sztuka.id_sztuka = ksiazka.ksiazka_id where sztuka.wypozyczona = false;
-
 DROP VIEW wypozyczone;
 CREATE VIEW wypozyczone
 AS
@@ -321,24 +286,5 @@ create VIEW ksiazka_autor_wydawnictwo
 AS 
 SELECT ksiazka.ksiazka_id, ksiazka.tytul, autor.imie, autor.nazwisko, wydawnictwo.nazwa as wydawnictwo
 FROM ksiazka INNER JOIN wydawnictwo ON wydawnictwo.wydawnictwo_id = ksiazka.wydawnictwo
-INNER JOIN autor ON autor.autor_id = ksiazka.autor;-- WHERE autor.autor_id = ksiazka.ksiazka_id;
+INNER JOIN autor ON autor.autor_id = ksiazka.autor;
 
--- SELECT COUNT(*) FROM sztuka;
-
-
-
-
-
--- CREATE OR REPLACE FUNCTION insert_adres() RETURNS TRIGGER AS $$
--- BEGIN
---   IF (EXISTS (select czytelnik_id from czytelnik where ))
-
-
---   INSERT INTO person_data (id) VALUES (New.id) ;
---   RETURN NEW;
--- END;
--- $$ LANGUAGE 'plpgsql';
-
--- CREATE TRIGGER czytelnik_insert
---     BEFORE INSERT ON czytelnik
---     FOR EACH ROW EXECUTE PROCEDURE insert_adres();

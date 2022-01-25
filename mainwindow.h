@@ -12,55 +12,72 @@ QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
 
+/**
+ * @brief Klasa reprezentująca główne okno aplikacji
+ * 
+ */
+
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
 
 public:
+    /**
+     * @brief Konstruktor domyślny
+     * 
+     * @param parent 
+     */
     MainWindow(QWidget *parent = nullptr);
+    /**
+     * @brief Destruktor
+     * 
+     */
     ~MainWindow();
 
-//    void updateTableList();
+    /**
+     * @brief Metoda tworzy tabelę na podstawie odpowiedzi bazy danych
+     * 
+     * @param query Zapytanie do bazy danych
+     */
     void showTable(QString query);
-    void insertIntoTable();
 
 public slots:
+    /**
+     * @brief Metoda obiera wiadomość i wpisuje ją do konsoli okna głównego aplikacji
+     * 
+     * @param text 
+     * @param red 
+     */
     void catch_log(const QString text, bool red = false);
-    void onLoginOKClicked();
+
 private slots:
+/**
+ * Metody obsługują zdarzenia wynikające z obsługi okna głównego
+ */
+    void onLoginOKClicked();
     void onAboutClicked() const;
     void onExitClicked();
-
     void on_pushButton_submit_clicked();
-
     void on_pushButton_login_clicked();
-
     void on_pushButton_logout_clicked();
-
     void on_comboBox_table_currentIndexChanged(int index);
-
     void on_pushButton_input_clicked();
-
     void on_pushButton_save_clicked();
-
     void on_comboBox_tablestretch_activated(int index);
-
     void on_pushButton_ava_clicked();
-
     void on_pushButton_unav_clicked();
-
     void on_pushButton_cAv_clicked();
-
     void on_pushButton_cUnav_clicked();
-
     void on_comboBox_sort_currentIndexChanged(int index);
-
     void on_radioButton_up_clicked();
-
     void on_radioButton_down_clicked();
 
 
 private:
+    /**
+     * @brief Wskaźnik na elementy graficzne okna głównego
+     * 
+     */
     Ui::MainWindow *ui;
 //    std::unique_ptr<Database> m_db;
     Database * m_db;

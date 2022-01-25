@@ -2,7 +2,7 @@
 
 Database::Database(QString dbName, QString user, QString pass, QString hostaddr, QString port)
 :
-     m_dbName(dbName)
+    m_dbName(dbName)
     , m_user(user)
     , m_password(pass)
     , m_hostAddres(hostaddr)

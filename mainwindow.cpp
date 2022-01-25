@@ -72,23 +72,11 @@ void MainWindow::showTable(QString query)
 
 }
 
-void MainWindow::insertIntoTable()
-{
-
-}
-
-//void MainWindow::updateTableList()
-//{
-//    pqxx::result res = m_db->sendQuery("\d");
-//    for (const auto & row : res)
-//        for (const auto & i : row)
-//            qDebug() << i.c_str();
-//}
 
 void MainWindow::catch_log(const QString text, bool red)
 {
     if (red)
-        ui->appOstream->setTextColor(Qt::red);
+    ui->appOstream->setTextColor(Qt::red);
     ui->appOstream->insertPlainText(QString::number(++m_logCounter) + ": " + text);
     ui->appOstream->verticalScrollBar()->setValue(ui->appOstream->verticalScrollBar()->maximum());
     ui->appOstream->setTextColor(Qt::black);
@@ -308,12 +296,16 @@ void MainWindow::on_pushButton_save_clicked()
         if (i == cols - 1)
             if(re.match(curVal).hasMatch())
                 values += curVal + " ";
+            else if (curVal == "")
+                values += "NULL ";
             else
                 values += "\'" + curVal + "\' ";
 
         else
             if(re.match(curVal).hasMatch())
                 values += curVal + ", ";
+            else if (curVal == "")
+                values += "NULL, ";
             else
                 values += "\'" + curVal + "\', ";
 
@@ -357,16 +349,42 @@ void MainWindow::on_comboBox_tablestretch_activated(int index)
 }
 
 
-void MainWindow::on_pushButton_ava_clicked() { showTable("SELECT * FROM dostepne"); }
+void MainWindow::on_pushButton_ava_clicked()
+{
+    showTable("SELECT * FROM dostepne");
+    ui->comboBox_sort->setDisabled(true);
+    ui->radioButton_down->setDisabled(true);
+    ui->radioButton_up->setDisabled(true);
+    ui->pushButton_input->setDisabled(true);
+}
 
 
-void MainWindow::on_pushButton_unav_clicked() { showTable("SELECT * FROM wypozyczone"); }
+void MainWindow::on_pushButton_unav_clicked()
+{
+    showTable("SELECT * FROM wypozyczone");
+    ui->comboBox_sort->setDisabled(true);
+    ui->radioButton_down->setDisabled(true);
+    ui->radioButton_up->setDisabled(true);
+    ui->pushButton_input->setDisabled(true);
+}
 
 
-void MainWindow::on_pushButton_cAv_clicked() { showTable("SELECT COUNT(*) as Dostepne FROM sztuka where wypozyczona = false;"); }
+void MainWindow::on_pushButton_cAv_clicked() {
+    showTable("SELECT COUNT(*) as Dostepne FROM sztuka where wypozyczona = false;");
+    ui->comboBox_sort->setDisabled(true);
+    ui->radioButton_down->setDisabled(true);
+    ui->radioButton_up->setDisabled(true);
+    ui->pushButton_input->setDisabled(true);
+}
 
 
-void MainWindow::on_pushButton_cUnav_clicked() { showTable("SELECT COUNT(*) as Wypozyczone FROM sztuka where wypozyczona = true;"); }
+void MainWindow::on_pushButton_cUnav_clicked() {
+    showTable("SELECT COUNT(*) as Wypozyczone FROM sztuka where wypozyczona = true;");
+    ui->comboBox_sort->setDisabled(true);
+    ui->radioButton_down->setDisabled(true);
+    ui->radioButton_up->setDisabled(true);
+    ui->pushButton_input->setDisabled(true);
+}
 
 
 void MainWindow::on_comboBox_sort_currentIndexChanged(int index) { on_comboBox_table_currentIndexChanged(ui->comboBox_table->currentIndex()); }

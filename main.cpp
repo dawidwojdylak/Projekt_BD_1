@@ -10,11 +10,5 @@ int main(int argc, char *argv[])
     MainWindow w;
     w.show();
 
-
-//    Database db;
-//    db.connect();
-//    db.sendQuery("Select * from customer;");
-
-
     return a.exec();
 }

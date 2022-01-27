@@ -49,6 +49,13 @@ public:
      * @return pqxx::result Odpowiedź bazy danych
      */
     pqxx::result sendQuery(QString request, bool saveMode = false);
+
+    /**
+     * @brief deleteData Usuwa wiersz z tabeli
+     * @param request Polecenie sql do usuwania rejestrów
+     */
+    pqxx::result deleteData(QString request);
+
     /**
      * Settery 
      */

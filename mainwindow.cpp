@@ -395,3 +395,22 @@ void MainWindow::on_radioButton_up_clicked() { on_comboBox_table_currentIndexCha
 
 void MainWindow::on_radioButton_down_clicked() { on_comboBox_table_currentIndexChanged(ui->comboBox_table->currentIndex()); }
 
+
+void MainWindow::on_pushButton_delete_clicked()
+{
+    QString columnName =  ui->tableWidget->horizontalHeaderItem(0)->text();
+    QString indexOfDeletingItem = ui->tableWidget->model()->data(ui->tableWidget->model()->index(ui->tableWidget->currentRow(), 0)).toString();
+    QString tableName = ui->comboBox_table->currentText();
+
+    if (indexOfDeletingItem == "")
+    {
+        catch_log("Please select a row to be removed\n", true);
+        return;
+    }
+
+    QString query = "DELETE FROM " + m_db->getSelectedTab() + " WHERE " + columnName + " = " + indexOfDeletingItem;
+
+    m_db->deleteData(query);
+    on_comboBox_table_currentIndexChanged(ui->comboBox_table->currentIndex());
+}
+

@@ -92,6 +92,42 @@ pqxx::result Database::sendQuery(QString request, bool saveMode)
     return temp;
 }
 
+pqxx::result Database::deleteData(QString request)
+{
+    pqxx::result temp;
+    if (m_DBisConnected)
+    {
+        try
+        {
+            pqxx::work w {*m_connection};
+
+            temp = w.exec(request.toStdString());
+
+            w.commit();
+            emit emit_log("Data has been removed successfully\n");
+
+
+        }
+        catch (pqxx::sql_error const & e)
+        {
+            std::cerr << "SQL error: " << e.what() << std::endl;
+            std::cerr << "SQL query: " << e.query() << std::endl;
+            emit emit_log(QString::fromStdString(std::string("SQL error: ") + std::string(e.what()) + std::string("SQL query: ") + std::string(e.query()) + '\n'), true);
+        }
+        catch(const std::exception& e)
+        {
+            std::cerr << e.what() << '\n';
+            emit emit_log(QString::fromStdString(e.what()) + "\n", true);
+        }
+    }
+    else
+    {
+        std::cout << "Data base connection is down\n";
+        emit emit_log("Data base connection is down\n", true);
+    }
+    return temp;
+}
+
 
 void Database::setDBName      (QString arg) { m_dbName = arg; }
 void Database::setUserName    (QString arg) { m_user = arg; }
